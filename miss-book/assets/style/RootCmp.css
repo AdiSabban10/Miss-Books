@@ -1,0 +1,16 @@
+#root header {
+    display: flex;
+    align-items: center;
+
+    padding: 10px;
+    background-color: lightsteelblue;
+}
+
+#root header h1 {
+    margin-inline-end: auto;
+}
+
+#root header nav {
+    display: flex;
+    gap: 10px;
+}
