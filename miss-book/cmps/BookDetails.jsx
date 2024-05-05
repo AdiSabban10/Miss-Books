@@ -1,3 +1,6 @@
+import { LongTxt } from "./LongTxt.jsx"
+
+
 export function BookDetails({ book, onClose }) {
 
     function getReadingType(pageCount) {
@@ -29,7 +32,8 @@ export function BookDetails({ book, onClose }) {
         <h4>Authors: {book.authors}</h4>
         {/* <span>Published Date: {book.publishedDate}</span> */}
         <span>Publication Status: {getPublicationStatus(book.publishedDate)}</span>
-        <p>Description: {book.description}</p>
+        {/* <p>Description: {book.description}</p> */}
+        <LongTxt txt={book.description} />
         <img src={book.thumbnail} alt="" />
         {/* <span>Page Count: {book.pageCount}</span> */}
         <span>Reading Type: {getReadingType(book.pageCount)}</span>
