@@ -1,0 +1,14 @@
+.book-details {
+    display: grid;
+    padding: 10px;
+    background-color: orange;
+    margin-block-start: 10px;
+}
+
+.book-details button {
+    justify-self: end;
+}
+
+.book-details img {
+    max-width: 70%;
+}
