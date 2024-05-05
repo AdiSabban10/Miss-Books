@@ -12,3 +12,20 @@
 .book-details img {
     max-width: 70%;
 }
+
+.red-price {
+    color: red;
+}
+
+.green-price {
+    color: green;
+}
+
+.on-sale {
+    padding-inline: 5px;
+    margin-inline-start: 10px;
+    font-weight: bold;
+    color: red;
+    background-color: rgb(247, 214, 154);
+   
+}

@@ -12,12 +12,6 @@ export function BookIndex () {
     const [ selectedBook, setSelectedBook ] = useState(null)
     const [ filterBy, setFilterBy ] = useState(bookService.getDefaultFilter())
 
-    // useEffect(() => {
-    //     bookService.query()
-    //         .then(books => setBooks(books))
-
-    // }, [])
-
     useEffect(() => {
         bookService.query(filterBy)
             .then(books => setBooks(books))
