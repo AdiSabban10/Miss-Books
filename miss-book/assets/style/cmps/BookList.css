@@ -7,4 +7,9 @@
 .book-list li {
     padding: 10px;
     background-color: lightblue;
+    border-radius: 5px;
+}
+
+.book-list li:hover {
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.49);
 }

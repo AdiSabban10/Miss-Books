@@ -2,9 +2,11 @@ const { useState, useEffect } = React
 
 export function BookFilter({ filterBy, onFilter }) {
     const [ filterByToEdit, setFilterByToEdit ] = useState(filterBy)
+    // const [ filterByToEdit, setFilterByToEdit ] = useState({ ...filterBy })
     
     useEffect(() => {
         onFilter(filterByToEdit)
+        // onFilter({ ...filterByToEdit })
     }, [filterByToEdit])
     
     function handleChange({ target }) {

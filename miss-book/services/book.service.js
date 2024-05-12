@@ -9,7 +9,10 @@ export const bookService = {
     get,
     remove,
     save,
+    getEmptyBook,
     getDefaultFilter,
+    saveReview,
+    removeReview,
 
 }
 // For Debug (easy access from console):
@@ -51,33 +54,42 @@ function save(book) {
     }
 }
 
+function getEmptyBook(title = '', price = '' ) {
+    return { title, price }
+}
+
 function getDefaultFilter(filterBy = { title: '', price: 0 }) {
     return { title: filterBy.title, price: filterBy.price }
 }
 
-// function _createBooks() {
-//     let books = utilService.loadFromStorage(BOOK_KEY)
-//     if (!books || !books.length) {
-//         books = []
-//         for (let i = 0; i < 20; i++) {
-//             const book = {
-//                 id: utilService.makeId(),
-//                 title: utilService.makeLorem(2),
-//                 listPrice: {
-//                     amount: utilService.getRandomIntInclusive(80, 500),
-//                     currencyCode: "EUR",
-//                     isOnSale: Math.random() > 0.7
-//                     },
-//                 }
-//             books.push(book)
-//         }
-//         utilService.saveToStorage(BOOK_KEY, books)
-//     }
-//     console.log('books:', books)
-// }
+function removeReview(bookId, reviewId) {
+    let books = utilService.loadFromStorage(BOOK_KEY)
+    let book = books.find((book) => book.id === bookId)
+    const newReviews = book.reviews.filter((review) => review.id !== reviewId)
+    book.reviews = newReviews
+    utilService.saveToStorage(BOOK_KEY, books)
+    return Promise.resolve()
+}
+
+function saveReview(bookId, reviewToSave) {
+    const books = utilService.loadFromStorage(BOOK_KEY)
+    const book = books.find((book) => book.id === bookId)
+    const review = _createReview(reviewToSave)
+    book.reviews.unshift(review)
+    utilService.saveToStorage(BOOK_KEY, books)
+    return Promise.resolve(review)
+}
+
+function _createReview(reviewToSave) {
+    return {
+        id: utilService.makeId(),
+        ...reviewToSave,
+    }
+}
 
 function _createBooks() {
     let books = utilService.loadFromStorage(BOOK_KEY)
+    
     if (!books || !books.length) {
         books = []
         const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
@@ -99,9 +111,9 @@ function _createBooks() {
                     amount: utilService.getRandomIntInclusive(80, 500),
                     currencyCode: "EUR",
                     isOnSale: Math.random() > 0.7
-                }
+                },
+                reviews: [],
             }
-            console.log('book.thumbnail', book.thumbnail)
             books.push(book)
         }
         utilService.saveToStorage(BOOK_KEY, books)

@@ -6,6 +6,7 @@ export const utilService = {
     getRandomIntInclusive,
     getDayName,
     getMonthName,
+    getCurrencySign,
     animateCSS
 }
 
@@ -57,6 +58,19 @@ function getMonthName(date) {
     ]
     return monthNames[date.getMonth()]
 }
+
+function getCurrencySign(sign) {
+    switch (sign) {
+      case 'EUR':
+        return '€';
+      case 'ILS':
+        return '₪';
+      case 'USD':
+        return '$';
+      default:
+        return '';
+    }
+  }
 
 function animateCSS(el, animation='bounce') {
     const prefix = 'animate__'

@@ -1,0 +1,49 @@
+.review-add {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #474e5d7a;
+    padding-top: 50px;
+  }
+  
+  .review-add .review-modal {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 30%;
+    text-align: center;
+  }
+  
+  .review-modal h1 {
+    background-color: #bb8082;
+    color: white;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .review-modal textarea {
+    display: block;
+    margin: 20px auto;
+    /* resize: none; */
+  }
+  
+  .review-form input,
+  .review-form button {
+    margin: 10px;
+  }
+  
+  .btn-toggle-modal {
+    position: absolute;
+    right: 36%;
+    top: 16%;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 2em;
+  }
+  
+  

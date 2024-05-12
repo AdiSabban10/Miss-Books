@@ -1,16 +1,21 @@
-.book-details {
+/* .book-details {
     display: grid;
     padding: 10px;
     background-color: orange;
     margin-block-start: 10px;
+} */
+
+.book-details {
+    max-width: 980px;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    margin: 10px auto;
 }
 
-.book-details button {
-    justify-self: end;
-}
-
-.book-details img {
-    max-width: 70%;
+.book-details .details-container {
+    margin-left: 20px;
+    line-height: 1.5;
 }
 
 .red-price {
@@ -21,11 +26,40 @@
     color: green;
 }
 
-.on-sale {
-    padding-inline: 5px;
-    margin-inline-start: 10px;
-    font-weight: bold;
-    color: red;
-    background-color: rgb(247, 214, 154);
-   
+.gray {
+    color: gray;
+}
+
+.star.on {
+    color: gold;
+}
+
+.review-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px;
+    
+}
+
+.review-details {
+    position: relative;
+    border: 2px solid #bb8082;
+    padding: 10px;
+    line-height: 1.5;
+}
+
+.review-details .btn-remove-review {
+    position: absolute;
+    right: 2%;
+    top: 3%;
+    font-size: 1.2rem;
+    background-color: whitesmoke;
+    border: 2px solid #bb8082;
+    border-radius: 50%;
+}
+
+.review-container p {
+    max-width: 90%;
+    word-wrap: break-word;
 }

@@ -1,5 +1,6 @@
 .long-txt {
     color: blue;
     text-decoration: underline;
+    cursor: pointer;
     
 }
