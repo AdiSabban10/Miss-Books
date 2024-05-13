@@ -5,7 +5,9 @@ const { useNavigate, useParams } = ReactRouterDOM
 import { bookService } from '../services/book.service.js'
 
 export function BookEdit() {
-    const [ book, setBook ] = useState(bookService.getEmptyBook())
+    const [ book, setBook ] = useState(null)
+    const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
+    // const [bookToEdit, setBookToEdit] = useState(null)
 
     const params = useParams()
     const navigate = useNavigate()
@@ -14,22 +16,50 @@ export function BookEdit() {
         if(!params.bookId) return
 
         bookService.get(params.bookId)
-            .then(setBook)
+            .then((book) => {
+            const bookToEdit = { title: book.title, price: book.listPrice.amount }
+            setBook(book)
+            setBookToEdit(bookToEdit)
+            })
     }, [])
+    // }, [params.bookId])
+
+    // function onSave(ev) {
+    //     ev.preventDefault()
+    //     const bookToSave = {
+    //         ...book,
+    //         title: bookToEdit.title,
+    //         listPrice: { ...book.listPrice, amount: bookToEdit.price }
+    //     }
+    //     bookService.save(bookToSave)
+    //         .then(() => navigate('/book'))
+    //         .catch(() => {
+    //             alert('Couldnt save')
+    //             navigate('/book')
+    //         })
+    // }
 
     function onSave(ev) {
         ev.preventDefault()
-        bookService.save(book)
+        if (!bookToEdit.title || !bookToEdit.price) return
+        
+        const bookToSave = {
+            title: bookToEdit.title,
+            listPrice: { amount: bookToEdit.price }
+        }
+    
+        if (book && book.id) bookToSave.id = book.id
+        
+        bookService.save(bookToSave)
             .then(() => navigate('/book'))
             .catch(() => {
-                alert('Couldnt save')
+                alert('Couldn\'t save')
                 navigate('/book')
             })
     }
 
     function handleChange({ target }) {
-        const { type, name: prop } = target
-        let { value } = target
+        let { value, name: field, type } = target
         
         switch (type) {
             case 'range':
@@ -41,27 +71,29 @@ export function BookEdit() {
                 value = target.checked
                 break;
         }
-        setBook(prevBook => ({ ...prevBook, [prop]: value }))
+        setBookToEdit((prevBook) => ({ ...prevBook, [field]: value }))
     }
 
-    return <section className="book-edit">
-        <h1>{params.bookId ? 'Edit book' : 'Add book'}</h1>
+    // if (!bookToEdit) return <div>Loading...</div>
+    return (
+        <section className="book-edit">
+            <h1>{params.bookId ? 'Edit book' : 'Add book'}</h1>
 
-        <form onSubmit={onSave}>
-            <label htmlFor="title">Title</label>
-            <input 
-                onChange={handleChange} value={book.title} 
-                id="title" name="title"
-                type="text" placeholder="title" />
+            <form onSubmit={onSave}>
+                <label htmlFor="title">Title</label>
+                <input 
+                    onChange={handleChange} value={bookToEdit.title} 
+                    id="title" name="title"
+                    type="text" placeholder="title" />
 
-            <label htmlFor="price">Price</label>
-            <input 
-                onChange={handleChange} value={book.price}  
-                id="price" name="price"
-                type="number" placeholder="price" />
-            
-            <button>Save</button>
-        </form>
-    </section>
-
+                <label htmlFor="price">Price</label>
+                <input 
+                    onChange={handleChange} value={bookToEdit.price}  
+                    id="price" name="price"
+                    type="number" placeholder="price" />
+                
+                <button>Save</button>
+            </form>
+        </section>
+    )
 }

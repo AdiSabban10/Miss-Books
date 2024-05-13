@@ -86,48 +86,49 @@ export function BookDetails() {
 
     if (isLoading) return <h3>Loading...</h3>
     return (
-        <section className="book-details">
-            <div className='img-container'>
-                <img src={book.thumbnail} />
+        <section>
+            <div className="book-details">
+                <div className='img-container'>
+                    <img src={book.thumbnail} />
+                </div>
+                <div className='details-container'>
+                    <h2>{capitalize(book.title)}</h2>
+                    <h3>{book.subtitle}</h3>
+                    <h4>Authors: {book.authors.join(', ')}</h4>
+                    <h4>Categories: {book.categories.join(', ')}</h4>
+                    <h4>Language: {book.language.toUpperCase()}</h4>
+                    <h4 className={getPriceColorClass(book.listPrice.amount)}>
+                        Price: {utilService.getCurrencySign(book.listPrice.currencyCode)}
+                        {book.listPrice.amount}
+                    </h4>
+                    <h4>Is the book on sale? {book.listPrice.isOnSale ? 'Yes!' : 'no'}</h4>
+                    <h4>
+                        Page count: {book.pageCount} , Reading duration: {getReadingDuration(book.pageCount)}
+                    </h4>
+                    <h4>
+                        Published Year: {book.publishedDate} ,
+                        this book is: {getPublicationStatus(book.publishedDate)}
+                    </h4>
+
+                    <LongTxt txt={book.description} />
+                    <button onClick={onToggleReviewModal}>Add review</button>
+
+                    {isShowReviewModal && (
+                        <ReviewAdd
+                            onToggleReviewModal={onToggleReviewModal}
+                            onSaveReview={onSaveReview}
+                        />
+                    )}
+
+                    <Link to="/book"><button>x</button></Link>
+                </div>
             </div>
-            <div className='details-container'>
-                <h2>{capitalize(book.title)}</h2>
-                <h3>{book.subtitle}</h3>
-                <h4>Authors: {book.authors.join(', ')}</h4>
-                <h4>Categories: {book.categories.join(', ')}</h4>
-                <h4>Language: {book.language.toUpperCase()}</h4>
-                <h4 className={getPriceColorClass(book.listPrice.amount)}>
-                    Price: {utilService.getCurrencySign(book.listPrice.currencyCode)}
-                    {book.listPrice.amount}
-                </h4>
-                <h4>Is the book on sale? {book.listPrice.isOnSale ? 'Yes!' : 'no'}</h4>
-                <h4>
-                    Page count: {book.pageCount} , Reading duration: {getReadingDuration(book.pageCount)}
-                </h4>
-                <h4>
-                    Published Year: {book.publishedDate} ,
-                    this book is: {getPublicationStatus(book.publishedDate)}
-                </h4>
-
-                <LongTxt txt={book.description} />
-                <button onClick={onToggleReviewModal}>Add review</button>
-
-                {isShowReviewModal && (
-                    <ReviewAdd
-                        onToggleReviewModal={onToggleReviewModal}
-                        onSaveReview={onSaveReview}
-                    />
-                )}
-
-                <Link to="/book"><button>x</button></Link>
-            </div>
-
             <div className='review-container'>
-                <ReviewList
-                    reviews={book.reviews}
-                    onRemoveReview={onRemoveReview}
-                />
-            </div>
+                    <ReviewList
+                        reviews={book.reviews}
+                        onRemoveReview={onRemoveReview}
+                    />
+            </div>   
         </section >
     )
 }
