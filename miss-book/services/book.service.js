@@ -47,15 +47,34 @@ function remove(bookId) {
 }
 
 function save(book) {
-    if (book.id) {
+    // if (book.id) {
+    if (book.id !== '') {
         return storageService.put(BOOK_KEY, book)
     } else {
         return storageService.post(BOOK_KEY, book)
     }
 }
 
-function getEmptyBook(title = '', price = '' ) {
-    return { title, price }
+function getEmptyBook(title = '', price = 0 ) {
+    const book = {
+        id: '',
+        title: title,
+        subtitle: '',
+        authors: [],
+        publishedDate: '',
+        description: '',
+        pageCount: '',
+        categories: [],
+        thumbnail: `./assets/img/not-available.jpg`,
+        language: '',
+        listPrice: {
+            amount: price,
+            currencyCode: '',
+            isOnSale: '',
+        },
+        reviews: []
+    }
+    return book
 }
 
 function getDefaultFilter(filterBy = { title: '', price: 0 }) {
@@ -130,4 +149,3 @@ function _setNextPrevBookId(book) {
         return book
     })
 }
-

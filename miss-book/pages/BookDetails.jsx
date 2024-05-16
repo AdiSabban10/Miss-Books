@@ -120,7 +120,11 @@ export function BookDetails() {
                         />
                     )}
 
+                <section className="actions">
+                    <Link to={`/book/${book.prevBookId}`}><button>Prev</button></Link>
+                    <Link to={`/book/${book.nextBookId}`}><button>Next</button></Link>
                     <Link to="/book"><button>x</button></Link>
+                </section>
                 </div>
             </div>
             <div className='review-container'>

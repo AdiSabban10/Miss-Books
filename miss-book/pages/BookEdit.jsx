@@ -20,40 +20,37 @@ export function BookEdit() {
             const bookToEdit = { title: book.title, price: book.listPrice.amount }
             setBook(book)
             setBookToEdit(bookToEdit)
-            })
+        })
     }, [])
     // }, [params.bookId])
-
-    // function onSave(ev) {
-    //     ev.preventDefault()
-    //     const bookToSave = {
-    //         ...book,
-    //         title: bookToEdit.title,
-    //         listPrice: { ...book.listPrice, amount: bookToEdit.price }
-    //     }
-    //     bookService.save(bookToSave)
-    //         .then(() => navigate('/book'))
-    //         .catch(() => {
-    //             alert('Couldnt save')
-    //             navigate('/book')
-    //         })
-    // }
+    
 
     function onSave(ev) {
         ev.preventDefault()
         if (!bookToEdit.title || !bookToEdit.price) return
         
-        const bookToSave = {
-            title: bookToEdit.title,
-            listPrice: { amount: bookToEdit.price }
+        let bookToSave
+
+        if (book && book.id !== '') {
+            const updatedBook = {
+                ...book,
+                title: bookToEdit.title,
+                listPrice: { ...book.listPrice, amount: bookToEdit.price }
+            }
+            bookToSave = updatedBook
+        } else {
+            const newBook = {
+                ...bookService.getEmptyBook(),
+                title: bookToEdit.title,
+                listPrice: { ...bookService.getEmptyBook().listPrice, amount: bookToEdit.price }
+            }
+            bookToSave = newBook
         }
-    
-        if (book && book.id) bookToSave.id = book.id
         
         bookService.save(bookToSave)
             .then(() => navigate('/book'))
             .catch(() => {
-                alert('Couldn\'t save')
+                alert("Couldn't save")
                 navigate('/book')
             })
     }
@@ -87,7 +84,7 @@ export function BookEdit() {
                     type="text" placeholder="title" />
 
                 <label htmlFor="price">Price</label>
-                <input 
+                <input   
                     onChange={handleChange} value={bookToEdit.price}  
                     id="price" name="price"
                     type="number" placeholder="price" />
