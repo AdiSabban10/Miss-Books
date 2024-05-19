@@ -91,13 +91,21 @@ function removeReview(bookId, reviewId) {
 }
 
 function saveReview(bookId, reviewToSave) {
-    const books = utilService.loadFromStorage(BOOK_KEY)
-    const book = books.find((book) => book.id === bookId)
-    const review = _createReview(reviewToSave)
-    book.reviews.unshift(review)
-    utilService.saveToStorage(BOOK_KEY, books)
-    return Promise.resolve(review)
+
+    return get(bookId).then(book => {
+        const review = _createReview(reviewToSave)
+        book.reviews.unshift(review)
+        return save(book).then(() => review)
+    })
 }
+// function saveReview(bookId, reviewToSave) {
+//     const books = utilService.loadFromStorage(BOOK_KEY)
+//     const book = books.find((book) => book.id === bookId)
+//     const review = _createReview(reviewToSave)
+//     book.reviews.unshift(review)
+//     utilService.saveToStorage(BOOK_KEY, books)
+//     return Promise.resolve(review)
+// }
 
 function _createReview(reviewToSave) {
     return {
