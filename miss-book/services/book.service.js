@@ -13,6 +13,7 @@ export const bookService = {
     getDefaultFilter,
     saveReview,
     removeReview,
+    getFilterFromSearchParams,
 
 }
 // For Debug (easy access from console):
@@ -79,6 +80,13 @@ function getEmptyBook(title = '', price = 0 ) {
 
 function getDefaultFilter(filterBy = { title: '', price: 0 }) {
     return { title: filterBy.title, price: filterBy.price }
+}
+
+function getFilterFromSearchParams(searchParams) {
+    return {
+        title: searchParams.get('title') || '',
+        price: +searchParams.get('price') || '',
+    }
 }
 
 function removeReview(bookId, reviewId) {
